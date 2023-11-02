@@ -49,3 +49,17 @@ CREATE TABLE invoice_items (
   CONSTRAINT fk_invoice_id FOREIGN KEY (invoice_id) REFERENCES invoices(ID),
   CONSTRAINT fk_treatments_id FOREIGN KEY (treatments_id) REFERENCES treatments(ID)
 )
+
+/* Create treatments_medical junction table */
+CREATE TABLE treatments_medical_histories (
+	medical_history_id INT REFERENCES medical_histories (id),
+    treatment_id INT REFERENCES treatments (id)
+)
+
+/*Create indexes for the foreign keys to improve performance */
+CREATE INDEX idx_medical_history_id ON treatments_medical_histories (medical_history_id);
+CREATE INDEX idx_treatment_id ON treatments_medical_histories (treatment_id);
+CREATE INDEX idx_invoice_id ON invoice_items (invoice_id);
+CREATE INDEX idx_treatments_id ON invoice_items (treatments_id);
+CREATE INDEX idx_invoice_id ON invoices (medical_history_id);
+CREATE INDEX idx_medical_histories_id ON medical_histories (patient_id);
